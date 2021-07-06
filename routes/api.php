@@ -22,13 +22,27 @@ use \App\Http\Controllers\MarqueVehiculeController;
 use \App\Http\Controllers\PostVehiculeController;
 use \App\Http\Controllers\EquipementController;
 
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Response;
 
 
 
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+Route::get('images/{filename}', function ($filename)
+{
+    
+    $path='C:/ionic/data/'.$filename;
 
+    $file = File::get($path);
+    $type = File::mimeType($path);
+
+    $response = Response::make($file, 200);
+    $response->header("Content-Type", $type);
+
+    return $response;
+});
 // categories
 Route::get('/categories',[CategoriesController::class,'index']);
 
@@ -98,7 +112,11 @@ Route::get('/search/{title}',[PostController::class,'search']);
 Route::put('/updatePro/{id}',[ProfileController::class,'update']);
 Route::delete('/deleteProfile/{id}',[ProfileController::class,'destroy']);
 
+
 Route::post('/registerPro',[ProController::class,'register']);
+
+
+Route::post('/registerSimplePro',[ProController::class,'registerSimple']);
 Route::post('/loginPro',[ProController::class,'login']);
 
 Route::get('/user-profile/{token}', [ProController::class, 'userProfile']);    
@@ -143,8 +161,7 @@ Route::delete('/deleteannonce/{id}',[PostVehiculeController::class,'delete']);
 Route::post('/addEquipment',[PostVehiculeController::class,'addEquipment']);
 Route::get('/showEquipment/{id}',[PostVehiculeController::class,'show']);
 Route::delete('/deleteAnnonce/{id}',[PostVehiculeController::class,'delete']);
-Route::post('/sample-restful-apis', [PostVehiculeController::class, 'uploadimage']);
-
+Route::post('/AddImage', [PostVehiculeController::class, 'uploadimage'])->name('AddImage');
 
 Route::get('/equipment',[EquipementController::class,'index']);
 Route::post('/equipmentAdd',[EquipementController::class,'store']);

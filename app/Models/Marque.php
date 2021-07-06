@@ -10,11 +10,12 @@ class Marque extends Model
     use HasFactory;
     protected $table = "marque";
     protected $primaryKey = 'id';
+    public $timestamps = false;
+
 
     protected $fillable = 
     [
         'nom',
-        'marque'
     ];
     
   

@@ -20,7 +20,6 @@ class MarqueController extends Controller
     {
         $marque = new Marque();
         $marque->nom = $request->nom ;
-       // $marque->modele = $request->modele ;
         if($marque->save()){
             return new MarqueResource($marque);
         }
@@ -30,7 +29,6 @@ class MarqueController extends Controller
     {
         $marque = Marque::findOrFail($id);
         $marque->nom = $request->nom ;
-        $marque->modele = $request->modele ;
         if($marque->save()){
             return new MarqueResource($marque);
         }

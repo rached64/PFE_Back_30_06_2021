@@ -28,51 +28,61 @@ class PostVehiculeController extends Controller
         $p->NombreDePortes=$request->NombreDePortes;
         $p->NombreDePlaces=$request->NombreDePlaces;
         $p->carburant=$request->carburant;
-        if($request->hasFile('image')){
-            //Storage::delete('/public/pictures/'.$user->picture);
-            // Get filename with the extension
-            $filenameWithExt = $request->file('image')->getClientOriginalName();
-            //Get just filename
-            $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
-    $extension = $request->file('image')->getClientOriginalExtension();
-            // Filename to store
-            $fileNameToStore = $filename.'_'.time().'.'.$extension;
-            // Upload Image
-            $path = $request->file('image')->storeAs('',$fileNameToStore);
-       $p->image = $fileNameToStore ;
-       
-               $p->save(); 
+
+       if ($request->hasFile('image')) {
+            $image_file = $request->file('image');
+            $img_extension = $image_file->getClientOriginalExtension();
+            $img_filename = time() . '.' . $img_extension;
+            $path ='C:/ionic/data/';
+            $image_file->move($path, $img_filename);
+            $p->image = $img_filename;
         }
+
+        if($p->save()){
+            return response()->json(['message'=>'Image added successfult']);
+     }
+    }
+    public function uploadimage(Request $request) {
+        $p=new PostVehicule();
+        if ($request->hasFile('image')) {
+            $image_file = $request->file('image');
+            $img_extension = $image_file->getClientOriginalExtension();
+            $img_filename = time() . '.' . $img_extension;
+            $path ='C:/ionic/data/';
+            $image_file->move($path, $img_filename);
+            $p->image = $img_filename;
+
+        }
+
         if($p->save()){
             //return new PostResource($post); 
-            return response()->json(['message'=>'post added successfult']);
+            return response()->json(['message'=>'Image added successfult']);
      }
+
     }
 
 
 
+
     public function addEquipment(Request $request){
-        $p=new PostVehicule();
+
+
+     $p=new PostVehicule();
         $p->title=        $request->title;
         $p->description=  $request->description;
         $p->price=        $request->price;
         $p->category=      $request->category;
-     
-        if($request->hasFile('image')){
-            //Storage::delete('/public/pictures/'.$user->picture);
-            // Get filename with the extension
-            $filenameWithExt = $request->file('image')->getClientOriginalName();
-            //Get just filename
-            $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
-    $extension = $request->file('image')->getClientOriginalExtension();
-            // Filename to store
-            $fileNameToStore = $filename.'_'.time().'.'.$extension;
-            // Upload Image
-            $path = $request->file('image')->storeAs('',$fileNameToStore);
-       $p->image = $fileNameToStore ;
-       
-               $p->save(); 
+
+        if ($request->hasFile('image')) {
+            $image_file = $request->file('image');
+            $img_extension = $image_file->getClientOriginalExtension();
+            $img_filename = time() . '.' . $img_extension;
+            $path ='C:/ionic/data/';
+            $image_file->move($path, $img_filename);
+            $p->image = $img_filename;
         }
+
+        
 
         if($p->save()){
             //return new PostResource($post); 

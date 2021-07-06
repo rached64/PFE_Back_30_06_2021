@@ -131,6 +131,25 @@ class ProController extends Controller
             return new ProResource($user);
         }
     }
+    public function registerSimple(Request $request){
+        $user= Pro::where('email',$request['email'])->first();
+        if($user){
+            $response['status']=0;
+            $response['message']='Email existe';
+            $response['code']= 409;
+        }else {
+            $user= Pro::create([
+                'nom' => $request->nom,
+                'email' => $request->email,
+                'password' => bcrypt($request->password),
+                'telephone' => $request->telephone,
+            ]);
+            $response['status']=1;
+            $response['message']='utlisateur crée avec succes';
+            $response['code']= 200;
+        }  
+        return response()->json($response);
+    }
 
 
   

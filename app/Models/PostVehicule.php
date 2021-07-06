@@ -19,7 +19,7 @@ class PostVehicule extends Model
         'description',
         'price'   , 
         'category',   
-        'picture',       
+        'image',       
         'Modele',
         'BoiteDeVitesse',
         'AnneeModele'   , 

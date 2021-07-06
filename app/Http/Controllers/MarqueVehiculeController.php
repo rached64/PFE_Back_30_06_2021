@@ -19,7 +19,6 @@ class MarqueVehiculeController extends Controller
     {
         $marque = new MarqueVehicule();
         $marque->nom = $request->nom ;
-        $marque->modele_id  = $request['modele_id']  ; 
         if($marque->save()){
             return new MarqueVehiculeResource($marque);
         }
